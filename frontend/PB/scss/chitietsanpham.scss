@@ -1,0 +1,190 @@
+@import 'font';
+@import 'mixins';
+header{
+    .wrap{
+        background-color: #202a36;
+    }    
+    #contact{
+       
+        @include clearFix;
+        color:white;
+    }
+    
+    #logo{
+        font-family: $f2;
+        color:#86c64f;
+    }
+    #menu{
+            border-bottom: 1px solid green;
+            padding-bottom: 10px;
+        
+        @include clearFix;
+        i{
+            color:#202a36;
+            cursor: pointer;
+        }
+        a{
+            margin-left: 10px;
+            position: relative;
+            span{
+                position: absolute;
+                top: -10px;
+                background: green;
+                right: -10px;
+                color: white;
+                border-radius: 50%;
+                width: 20px;
+                height: 20px;
+                text-align: center;
+                font-size: 12px;
+                font-weight: bold;
+            }
+        }
+        #me{
+            border: 1px solid black;
+            border-radius: 10px;
+            padding: 0 10px;
+        }
+    }
+    
+}
+#banner{
+    margin: 20px 0;
+    .wrap_banner{
+        position: relative;
+        height: 300px;
+        background-image: url('../img/2.jpeg');
+    }
+    
+    h3{ padding-top:140px;
+        color:white;
+        font-family: $f2;
+    }
+}
+.in_mau{
+    font-family: $f2;
+    font-size:20px;
+}
+#name_danhmuc{
+    color: #86c64f;
+    font-size: 23px;
+}
+
+img {
+    vertical-align: middle;
+}
+.wrap_bg{
+    height: 100%;
+    background-color: #202a3685;
+}
+.tensanpham{
+    margin: 0 0;
+    font-weight: bold;
+    padding: 0 20px;
+}
+.giasanpham{
+    margin: 5px 0;
+    font-size: 13px;
+}
+@keyframes move{
+    0%{
+        opacity: 0;
+
+    }
+    100%{
+        opacity: 1;
+        bottom: 10%;
+    }
+}
+.wrap_sanpham{
+    height: 350px;
+    position: relative;
+    overflow: hidden;
+}
+
+.wrap_btn {
+    overflow: hidden;
+    position: relative;
+    height: 100%;
+}
+.a_hover{
+    position: absolute;
+    bottom: -10%;
+    right: 10%;
+}
+.a_hover_mobile{
+    position: absolute;
+    bottom: 10%;
+    right: 10%;
+}
+
+.wrap_img{
+    height: 250px;
+    padding: 20px;
+}
+
+.wrap_bg{
+    height: 100%;
+    background-color: #202a3685;
+}
+.tensanpham{
+    margin: 0 0;
+    font-weight: bold;
+    padding: 0 20px;
+}
+.giasanpham{
+    margin: 5px 0;
+    font-size: 13px;
+}
+.wrap_sanpham:hover .a_hover{
+    -webkit-animation-name: move;
+    -webkit-animation-duration: 300ms;
+    animation-name: move;
+    animation-duration: 300ms;
+    animation-fill-mode: forwards; 
+    
+
+}
+.khungsanpham:hover .wrap_sanpham{
+    box-shadow: 0.5px 0.5px 12px 3px #00000017;
+}
+.chinh_img{
+    
+
+  max-width: 350px;
+    margin:0 auto 20px auto;
+}
+.hinhanhphu{
+    max-width: 250px;
+    margin:0 auto;
+}
+
+#footer{
+
+    max-height: 400px;
+    
+    background-image: url(../img/9.jpeg);
+    .center_all{
+        padding: 40px;
+        height: 100%;
+    background-color: #202a3685;
+    color: white;
+    h2{
+        font-family: "Pacifico", cursive;
+    }
+    p{
+        font-size: 10px;
+    }
+    }
+}
+#modal_search{
+    margin-bottom: 0;
+    
+}
+.modal .modal-content {
+    padding: 10px;
+    overflow: hidden;
+}
+.active_link{
+    color: #86c64f;
+}
