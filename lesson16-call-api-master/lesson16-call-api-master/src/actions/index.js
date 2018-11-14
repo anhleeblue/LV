@@ -31,20 +31,7 @@ export const actDeleteProduct = (id) => {
     }
 }
 
-export const actAddProductRequest = (product) => {
-    return dispatch => {
-        return callApi('products', 'POST', product).then(res => {
-            dispatch(actAddProduct(res.data));
-        });
-    }
-}
 
-export const actAddProduct = (product) => {
-    return {
-        type : Types.ADD_PRODUCT,
-        product
-    }
-}
 
 export const actGetProductRequest = (id) => {
     return dispatch => {
@@ -60,7 +47,20 @@ export const actGetProduct = (product) => {
         product
     }
 }
+export const actAddProductRequest = (product) => {
+    return dispatch => {
+        return callApi('products', 'POST', product).then(res => {
+            dispatch(actAddProduct(res.data));
+        });
+    }
+}
 
+export const actAddProduct = (product) => {
+    return {
+        type : Types.ADD_PRODUCT,
+        product
+    }
+}
 export const actUpdateProductRequest = (product) => {
     return dispatch => {
         return callApi(`products/${product.id}`, 'PUT', product).then(res => {

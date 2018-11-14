@@ -72,11 +72,14 @@ router.post('/login',(req, res, next) =>{
                 );
                 return res.status(200).json({
                     message: 'Auth successful',
+                    comein:1,
                     token:token
                 });
             }
-            return res.status(404).json({
-                message:'Auth failed'
+            return res.status(200).json({
+                message:'Mail or password not found',
+                comein:0,
+
             });
         })
     })
