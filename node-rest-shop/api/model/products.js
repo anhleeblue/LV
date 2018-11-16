@@ -9,7 +9,7 @@ const productSchema = mongoose.Schema({
     congdung: {type: String},
     cachdung: {type: String},
     productImage: {type: String, required: true},
-    tinhtrang: {type: Boolean}
+    tinhtrang: {type: String}
     
     
     
