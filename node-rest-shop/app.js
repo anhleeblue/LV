@@ -10,7 +10,7 @@ const orderRoutes = require("./api/routes/orders");
 const userRoutes = require("./api/routes/users");
 // mongoose.set('useFindAndModify', true);
 // mongoose.set('useCreateIndex', true);
-mongoose.connect('mongodb://admin:'+ process.env.MONGO_ATLAS_PW +'@node-shop-api-shard-00-00-8ceyl.mongodb.net:27017,node-shop-api-shard-00-01-8ceyl.mongodb.net:27017,node-shop-api-shard-00-02-8ceyl.mongodb.net:27017/test?ssl=true&replicaSet=node-shop-api-shard-0&authSource=admin&retryWrites=true')
+mongoose.connect('mongodb://admin:'+ process.env.MONGO_ATLAS_PW +'@node-shop-api-shard-00-00-8ceyl.mongodb.net:27017,node-shop-api-shard-00-01-8ceyl.mongodb.net:27017,node-shop-api-shard-00-02-8ceyl.mongodb.net:27017/test?ssl=true&replicaSet=node-shop-api-shard-0&authSource=admin&retryWrites=true',{ useNewUrlParser: true } )
 mongoose.Promise = global.Promise;
 app.use(morgan("dev"));
 app.use('/uploads', express.static('uploads'));
