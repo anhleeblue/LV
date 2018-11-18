@@ -3,8 +3,32 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const checkAuth = require('../midddleware/check-auth');
 
 const User = require('../model/user');
+router.get('/',checkAuth, (req, res, next) => {
+const bearerHeader = req.headers['authorization'];
+const bearer = bearerHeader.split(' ')
+// Get token from array
+const bearerToken = bearer[1];
+//Set the token
+req.token = bearerToken;
+jwt.verify(req.token, process.env.JWT_KEY, (err, decode) => {
+    if (decode) {
+        res.status(200).json({
+            user: decode,
+            status: 'success'
+        })
+    } else {
+        res.status(404).json({
+            status: 'fail',
+            message: 'token invalid',
+            error: err
+        })
+    }
+})
+    
+});
 router.post('/signup', (req, res, next) => {
     User.find({email: req.body.email})
     .exec()
@@ -60,9 +84,11 @@ router.post('/login',(req, res, next) =>{
                     message:'Mail or password not found'
                 });
             }
-            if( result){
+            if(result){
+                console.log(user);
                const token =  jwt.sign({
-                    email: user[0],
+                    email: user[0].email,
+                    userName:user[0].userName,
                     userId: user[0]._id,
                 
                 },
