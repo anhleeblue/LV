@@ -8,8 +8,17 @@ const productSchema = mongoose.Schema({
     xuatxu: {type: String },
     congdung: {type: String},
     cachdung: {type: String},
-    productImage: {type: String, required: true},
-    tinhtrang: {type: String}
+    productImage: {type: String},
+    tinhtrang: {type: String},
+    khuyenmai: {type: Number , default: 0},
+    binhluans: [
+        {   
+            userName: { type: String, ref: 'User' },
+            binhluan: { type: String },
+            at: { type: Date, default: Date.now }
+        }
+    ]
+
     
     
     

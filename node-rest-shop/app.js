@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const productRoutes = require("./api/routes/products");
 const orderRoutes = require("./api/routes/orders");
 const userRoutes = require("./api/routes/users");
+const binhluanRoutes = require("./api/routes/binhluan");
 // mongoose.set('useFindAndModify', true);
 // mongoose.set('useCreateIndex', true);
 mongoose.connect('mongodb://admin:'+ process.env.MONGO_ATLAS_PW +'@node-shop-api-shard-00-00-8ceyl.mongodb.net:27017,node-shop-api-shard-00-01-8ceyl.mongodb.net:27017,node-shop-api-shard-00-02-8ceyl.mongodb.net:27017/test?ssl=true&replicaSet=node-shop-api-shard-0&authSource=admin&retryWrites=true',{ useNewUrlParser: true } )
@@ -39,7 +40,7 @@ app.use((req, res, next) => {
 app.use("/products", productRoutes);
 app.use("/orders", orderRoutes);
 app.use("/users", userRoutes);
-
+app.use("/binhluan", binhluanRoutes);
 app.use((req, res, next) => {
   const error = new Error("Not found");
   error.status = 404;

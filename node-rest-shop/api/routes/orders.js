@@ -9,7 +9,7 @@ const product =require('../model/products');
 // Handle incoming GET requests to /orders
 router.get('/',checkAuth, (req, res, next) => {
    Order.find()
-   .select('product quantity _id')
+   .select('giohang sdt diachi userName _id tinhtrang')
    .exec()
    .then(docs => {
        res.status(200).json({
@@ -17,11 +17,14 @@ router.get('/',checkAuth, (req, res, next) => {
            orders: docs.map(doc =>{
                return { 
                    _id: doc.id,
-                   product: doc.product,
-                   quantity: doc.quantity,
+                   giohang: doc.giohang,
+                   sdt: doc.sdt,
+                   userName: doc.userName,
+                    diachi: doc.diachi,
+                    tinhtrang:doc.tinhtrang,
                    request: {
                        type: 'GET',
-                       url: 'http://loalhost:3000/orders/' + doc._id
+                       url: 'http://loalhost:4000/orders/' + doc._id
                    }
 
                }
@@ -61,34 +64,40 @@ router.get('/:orderId',checkAuth, (req, res, next) => {
 
 //GET
 
-router.post('/',checkAuth, (req, res, next) => {
-    product.findById(req.body.productId)
-    .then(product => {
-        if(!product){
-            return res.status(404).json({
-                message: 'Product not found'
-            })
-        }
+router.post('/', (req, res, next) => {
+    // product.findById(req.body.productId)
+    // .then(product => {
+    //     if(!product){
+    //         return res.status(404).json({
+    //             message: 'Product not found'
+    //         })
+    //     }
         const order = new Order( {
             _id: mongoose.Types.ObjectId(),
-            quantity: req.body.quantity,
-            product: req.body.productId
+            giohang: req.body.giohang,
+            diachi: req.body.diachi,
+            sdt:req.body.sdt,
+            userName:req.body.userName,
+            tingtrang: false
             
         })
-       return order
-       .save()})
+       order
+       .save()
        .then(result => {
            console.log(result);
            res.status(201).json({
                message: 'Order stored',
                createdOrder: {
                    _id: result._id,
-                   product: result.product,
-                   quantity: result.quantity
+                   giohang: result.giohang,
+                   diachi: result.diachi,
+                   sdt:result.sdt,
+                   userName:result.userName,
+                   tinhtrang:result.tinhtrang
                },
                request: {
                 type: 'GET',
-                url: 'http://loalhost:3000/orders/' + result._id
+                url: 'http://loalhost:4000/orders/' + result._id
             }
            });       
     })

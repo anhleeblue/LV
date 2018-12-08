@@ -28,7 +28,7 @@ const upload = multer({
 const Product = require('../model/products');
 router.get('/', (req, res, next) => {
     Product.find()
-    .select('name price _id productImage xuatxu congdung cachdung tinhtrang loai')
+    .select('name price _id productImage xuatxu congdung cachdung tinhtrang loai binhluans')
     .exec()
     .then(docs => {
        const reponse = {
@@ -44,6 +44,7 @@ router.get('/', (req, res, next) => {
                    cachdung:doc.cachdung,
                    tinhtrang:doc.tinhtrang,
                    loai:doc.loai,
+                   binhluans:doc.binhluans,
                    request: {
                        type: 'GET',
                        url: 'http://localhost:4000/products/' + doc._id
@@ -62,6 +63,81 @@ router.get('/', (req, res, next) => {
     
 });
 
+router.get('/gets/:type', (req, res, next) => {
+    const t = req.params.type
+    const flag = t == 0 ? "Tất cả" : t == 1 ? "Thuốc bảo vệ thực vật" : t == 2 ? "Phân Bón" : t == 3 ? "Khác" : null;
+    if (t == 0) {
+        Product.find()
+            .select('name price _id productImage xuatxu congdung cachdung tinhtrang loai binhluans')
+            .exec()
+            .then(docs => {
+                const reponse = {
+                    count: docs.length,
+                    products: docs.map(doc => {
+                        return {
+                            name: doc.name,
+                            price: doc.price,
+                            productImage: doc.productImage,
+                            _id: doc._id,
+                            xuatxu: doc.xuatxu,
+                            congdung: doc.congdung,
+                            cachdung: doc.cachdung,
+                            tinhtrang: doc.tinhtrang,
+                            loai: doc.loai,
+                            binhluans: doc.binhluans,
+                            request: {
+                                type: 'GET',
+                                url: 'http://localhost:4000/products/' + doc._id
+                            }
+                        }
+                    })
+                };
+                // if( docs.length >= 0 ){
+                res.status(200).json(reponse);
+                // }else{
+                //     res.status(404).json({
+                //         message: 'No entries found'
+                //     });
+                // }
+            })
+    } else {
+        Product.find()
+            .select('name price _id productImage xuatxu congdung cachdung tinhtrang loai binhluans')
+            .where('loai').equals(flag)
+            .exec()
+            .then(docs => {
+                const reponse = {
+                    count: docs.length,
+                    products: docs.map(doc => {
+                        return {
+                            name: doc.name,
+                            price: doc.price,
+                            productImage: doc.productImage,
+                            _id: doc._id,
+                            xuatxu: doc.xuatxu,
+                            congdung: doc.congdung,
+                            cachdung: doc.cachdung,
+                            tinhtrang: doc.tinhtrang,
+                            loai: doc.loai,
+                            binhluans: doc.binhluans,
+                            request: {
+                                type: 'GET',
+                                url: 'http://localhost:4000/products/' + doc._id
+                            }
+                        }
+                    })
+                };
+                // if( docs.length >= 0 ){
+                res.status(200).json(reponse);
+                // }else{
+                //     res.status(404).json({
+                //         message: 'No entries found'
+                //     });
+                // }
+            })
+    }
+});
+
 router.post('/',checkAuth ,upload.single('productImage'),(req, res, next) => {
     
     const host = req.host;
@@ -75,6 +151,7 @@ router.post('/',checkAuth ,upload.single('productImage'),(req, res, next) => {
         cachdung:req.body.cachdung,
         tinhtrang:req.body.tinhtrang,
         loai:req.body.loai,
+        binhluans:req.body.binhluans,
          productImage: filePath
     });
     product.save().then( result => {
@@ -90,6 +167,7 @@ router.post('/',checkAuth ,upload.single('productImage'),(req, res, next) => {
                 cachdung:result.cachdung,
                 tinhtrang:result.tinhtrang,
                 loai:result.loai,
+                binhluans:result.binhluans,
                 _id:result._id,
                    request: {
                        type: 'GET',
@@ -113,7 +191,7 @@ router.post('/',checkAuth ,upload.single('productImage'),(req, res, next) => {
 router.get('/:productId', (req, res, next) => {
     const id = req.params.productId;
     Product.findById(id)
-    .select('name price _id productImage congdung cachdung loai xuatxu tinhtrang')
+    .select('name price _id productImage congdung cachdung loai xuatxu tinhtrang binhluans')
     .exec()
     .then(doc => {
         console.log("From database",doc);
@@ -163,6 +241,50 @@ router.patch('/:productId',checkAuth, (req, res, next) => {
         });
     });
 });
+/* comment to an event. */
+router.patch('/binhluan/:eventId', (req, res, next) => {
+    const id = req.params.eventId;
+    console.log(req.body);
+    var binhluan = {   
+        
+        userName:req.body.userName,
+        binhluan:req.body.binhluan
+    }
+    console.log(binhluan);
+    Product.findById(id)
+      .exec()
+      .then(doc => {
+        //console.log(doc);
+        if (doc) {
+            console.log(doc);
+            // console.log("254"  + req.body);
+          Product.updateOne({ _id: id }, { $push: { binhluans: binhluan } })
+            .exec()
+            .then(result => {
+                console.log("doc:" + doc);
+              doc.binhluans.push(binhluan);            
+              res.status(200).json({
+                status: 'success',
+                message: 'commented on an product',
+                event: doc
+              });
+            })
+            .catch(err => {
+              console.log(err);
+              res.status(500).json({ error: err });
+            });
+        } else {
+          res.status(404).json({ message: 'product does not exist' });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({ error: err });
+      });
+  });
+
+
+
 
 router.delete('/:productId',checkAuth, (req, res, next) => {
    const id = req.params.productId;
