@@ -228,6 +228,16 @@ router.patch('/:productId',checkAuth, (req, res, next) => {
         console.log(result);
         res.status(200).json({
             message: 'Product updated',
+            product: {name: result.name,
+                price: result.price,
+                productImage:result.productImage,
+                xuatxu:result.xuatxu,
+                congdung:result.congdung,
+                cachdung:result.cachdung,
+                tinhtrang:result.tinhtrang,
+                loai:result.loai,
+                binhluans:result.binhluans,
+                _id:result._id},
             request: {
                 type: 'GET',
                 url : 'http://localhost:4000/products/'+ id
