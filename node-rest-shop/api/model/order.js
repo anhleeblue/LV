@@ -13,7 +13,8 @@ const orderSchema = mongoose.Schema({
     tinhtrang:{type:Boolean, default:false},
     loai:{ type: String, default: 'COD'},
     ngaythanhtoan:{ type: Date , default: Date.now},
-    isdelete: {type: Boolean, default: false}
+    isdelete: {type: Boolean, default: false},
+    khuyenmai:{type: Number, default: 0}
     // ,    
     // product: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required:true},
     // quantity: {type : Number,default: 1}
