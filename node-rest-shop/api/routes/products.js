@@ -274,9 +274,10 @@ router.patch('/binhluan/:eventId', (req, res, next) => {
                 console.log("doc:" + doc);
               doc.binhluans.push(binhluan);            
               res.status(200).json({
+                binhluan:binhluan,
                 status: 'success',
                 message: 'commented on an product',
-                event: doc
+                product: doc
               });
             })
             .catch(err => {
